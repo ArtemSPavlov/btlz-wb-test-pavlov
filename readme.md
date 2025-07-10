@@ -1,54 +1,32 @@
-# Шаблон для выполнения тестового задания
+# Тестовое задание
+Решение тестового задания от соискателя Артем Павлов
 
 ## Описание
-Шаблон подготовлен для того, чтобы попробовать сократить трудоемкость выполнения тестового задания.
+Для запуска приложения необходимо создать .env файл, на основании файла example.env, и заполнить отсутствующие значения переменных окружения.
+Нужна настроенная служебная учетная запись google. В таблицах, в которые будет осуществляться выгрузка данных, необходимо выставить разрешение на редактирование для этой учетной записи.
+Указать разделенные запятой идентификаторы таблиц в переменной SPREAD_SHEETS_IDS.
 
-В шаблоне настоены контейнеры для `postgres` и приложения на `nodejs`.  
-Для взаимодействия с БД используется `knex.js`.  
-В контейнере `app` используется `build` для приложения на `ts`, но можно использовать и `js`.
+В .env добавлены новые переменные окружения:
+WB_TARIFF_JOB_CRONTAB
+GOOGLE_SHEETS_TARIFF_JOB_CRONTAB
+WB_API_TOKEN
+GOOGLE_SERVICE_ACCOUNT_EMAIL
+GOOGLE_PRIVATE_KEY
+SPREAD_SHEETS_IDS
 
-Шаблон не является обязательным!\
-Можно использовать как есть или изменять на свой вкус.
+WB_TARIFF_JOB_CRONTAB - Таблица crontab запуска джобы загружающей данные по тарифам из wildberries.
 
-Все настройки можно найти в файлах:
-- compose.yaml
-- dockerfile
-- package.json
-- tsconfig.json
-- src/config/env/env.ts
-- src/config/knex/knexfile.ts
+GOOGLE_SHEETS_TARIFF_JOB_CRONТAB - Таблица crontab запуска джобы обновляющей таблицы в google sheets.
 
-## Команды:
+WB_API_TOKEN - Токен авторизации api wildberries.
 
-Запуск базы данных:
-```bash
-docker compose up -d --build postgres
-```
+GOOGLE_SERVICE_ACCOUNT_EMAIL - Email служебной учетной записи google.
 
-Для выполнения миграций и сидов не из контейнера:
-```bash
-npm run knex:dev migrate latest
-```
+GOOGLE_PRIVATE_KEY - Приватный ключ служебной учетной записи google.
 
-```bash
-npm run knex:dev seed run
-```
-Также можно использовать и остальные команды (`migrate make <name>`,`migrate up`, `migrate down` и т.д.)
+SPREAD_SHEETS_IDS - Идентификаторы таблиц для выгрузки данных, разделенные запятой.
 
-Для запуска приложения в режиме разработки:
-```bash
-npm run dev
-```
+Запуск проиложения - docker compose up -d.
 
-Запуск проверки самого приложения:
-```bash
-docker compose up -d --build app
-```
-
-Для финальной проверки рекомендую:
-```bash
-docker compose down --rmi local --volumes
-docker compose up --build
-```
-
-PS: С наилучшими пожеланиями!
+PS: Посчитал что что названия складов (поле warehouseName) будут уникальны хотя прямо нигде не указано.
+Не стал расписывать настройку аккаунта google, думаю что вы знаете как это делается.
